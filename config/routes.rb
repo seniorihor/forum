@@ -1,4 +1,11 @@
 Forum::Application.routes.draw do
+
+  match '/sign_in' => 'users#sign_in' # page, where you can to login
+  match '/login'   => 'users#login'   # post-request for login
+  match '/logout'  => 'users#logout'  # post-request for logout
+  resources :users
+  resources :topics
+  resources :comments
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :topics
   has_many :comments
+
+  def sign_up
+    self.save
+  end
 end
