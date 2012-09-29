@@ -13,43 +13,42 @@ class UsersController < ApplicationController
     user.sign_up
   end
 
-  def sign_in
-  end
-
   def login
     user = User.where(login: params[:login]).first
     if user.nil? || user.password != params[:password]
       redirect_to '/users/sign_in'
     else
       session[:login] = user.login
-      redirect_to '/users'
+      puts "SESSION: #{session}"*100
+      redirect_to "/user/#{user.login}"
     end
   end
 
   def logout
     if session[:login].nil?
-      redirect_to '/users/sign_in'
+      redirect_to '/sign_in'
     else
       session[:login] = nil
       redirect_to '/users'
     end
   end
 
-#  def new
-#  end
-
   def edit
+    @user = User.where(login: params[:id]).first
+    puts "SESSION: #{session}"*100
   end
 
   def show
-    if session[:login].nil?
-      redirect_to '/pusta_sesiya'
-    else
-      redirect_to '/www'
-    end
+    @user = User.where(login: params[:login]).first
   end
 
   def update
+    puts "SESSION: #{session}"*100
+    user = User.where(login: session[:login]).first
+    user.firstname = params[:firstname]
+    user.lastname  = params[:lastname]
+    user.password  = params[:password]
+    user.save
   end
 
   def destroy

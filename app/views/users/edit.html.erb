@@ -1,0 +1,9 @@
+<% provide(:title, 'Profile') %>
+<h1>Edit my profile</h1>
+
+<form action='/update' method='POST'>
+  First name: <input type="text"     name="firstname"><br>
+  Last name:  <input type="text"     name="lastname"><br>
+  Password    <input type="password" name="password"><br>
+              <input type="submit"   value="Save">
+</form>

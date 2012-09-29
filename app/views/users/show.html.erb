@@ -1,0 +1,9 @@
+<% provide(:title, 'My page') %>
+<h1><%= "#{@user.firstname.capitalize} #{@user.lastname.capitalize} (#{@user.login})" %></h1>
+
+<form action="/users/<%=@user.login%>/edit" method='GET'>
+  <input type="submit" value="Edit">
+</form>
+<form action='/logout' method='POST'>
+  <input type="submit" value="Logout">
+</form>
