@@ -1,13 +1,19 @@
 Forum::Application.routes.draw do
 
-  match '/sign_in'     =>  'users#sign_in' # page, where you can to login
-  match '/login'       =>  'users#login',  via: :post # post-request for login
-  match '/logout'      =>  'users#logout', via: :post # post-request for logout
-  match '/user/:login' =>  'users#show'    # page of this user
-  match '/update' => 'users#update', via: :post
-  resources :users, except: :update
+  match '/users'                => 'users#index',   via: :get
+  match '/users'                => 'users#create',  via: :post
+  match '/users/new'            => 'users#new',     via: :get
+  match '/sign_in'              => 'users#sign_in', via: :get
+  match '/login'                => 'users#login',   via: :post
+  match '/logout'               => 'users#logout',  via: :post
+  match '/users/:login'         => 'users#show',    via: :get
+  match '/users/:login/edit'    => 'users#edit',    via: :get
+  match '/users/:login/update'  => 'users#update',  via: :post
+  match '/users/:login/destroy' => 'users#destroy', via: :post
+
   resources :topics
   resources :comments
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

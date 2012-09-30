@@ -1,9 +1,15 @@
 <% provide(:title, 'My page') %>
 <h1><%= "#{@user.firstname.capitalize} #{@user.lastname.capitalize} (#{@user.login})" %></h1>
+<p>registered: <%= "#{@user.created_at}" %></p>
 
 <form action="/users/<%=@user.login%>/edit" method='GET'>
-  <input type="submit" value="Edit">
+  <input type="submit" value="Edit my profile">
 </form>
+
+<form action="/users/<%=@user.login%>/destroy" method='POST'>
+  <input type="submit" value="Delete account">
+</form>
+
 <form action='/logout' method='POST'>
-  <input type="submit" value="Logout">
+  <input type="submit" value="Exit">
 </form>

@@ -1,0 +1,8 @@
+<% provide(:title, 'Main page') %>
+<h1>List of all users</h1>
+
+<% @users.each do |user| %>
+  <p><%= "#{user.login}" %></p>
+  <p><%= "#{user.firstname} #{user.lastname}" %></p>
+  <p><%= "#{'=' * 20}" %></p>
+<% end %>

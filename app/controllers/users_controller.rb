@@ -10,17 +10,31 @@ class UsersController < ApplicationController
     user.password  = params[:password]
     user.firstname = params[:firstname]
     user.lastname  = params[:lastname]
-    user.sign_up
+    user.save
+  end
+
+  def new
+  end
+
+  def edit
+    @user = User.where(login: params[:login]).first
+  end
+
+  def show
+    @user = User.where(login: params[:login]).first
+  end
+
+  def sign_in
+    redirect_to '/users' if session[:login]
   end
 
   def login
     user = User.where(login: params[:login]).first
     if user.nil? || user.password != params[:password]
-      redirect_to '/users/sign_in'
+      redirect_to '/sign_in'
     else
       session[:login] = user.login
-      puts "SESSION: #{session}"*100
-      redirect_to "/user/#{user.login}"
+      redirect_to "/users/#{user.login}"
     end
   end
 
@@ -28,29 +42,33 @@ class UsersController < ApplicationController
     if session[:login].nil?
       redirect_to '/sign_in'
     else
-      session[:login] = nil
+      #session[:login] = nil
+      reset_session
       redirect_to '/users'
     end
   end
 
-  def edit
-    @user = User.where(login: params[:id]).first
-    puts "SESSION: #{session}"*100
-  end
-
-  def show
-    @user = User.where(login: params[:login]).first
-  end
-
   def update
-    puts "SESSION: #{session}"*100
-    user = User.where(login: session[:login]).first
-    user.firstname = params[:firstname]
-    user.lastname  = params[:lastname]
-    user.password  = params[:password]
-    user.save
+    # why session is empty???
+    if user = User.where(login: session[:login]).first
+      user.firstname = params[:firstname]
+      user.lastname  = params[:lastname]
+      user.password  = params[:password]
+      user.save
+      redirect_to '/users'
+    else
+      redirect_to '/sign_in'
+    end
   end
 
   def destroy
+    if user = User.where(login: session[:login]).first
+      user.destroy!
+      #session[:login] = nil
+      reset_session
+      redirect_to '/users'
+    else
+      redirect_to '/sign_in'
+    end
   end
 end
